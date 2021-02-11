@@ -20,7 +20,7 @@ if __name__ == '__main__':
   if test_time_astar:
 
     time_bound = 3
-    p = multiprocessing.Process(target=anytime_weighted_astar, name="Anytime A star", args=(PROBLEMS[19],heur_manhattan_distance,10,time_bound))
+    p = multiprocessing.Process(target=anytime_weighted_astar, name="Anytime A star", args=(PROBLEMS[19],heur_alternate,10,time_bound))
     p.start()
     p.join(3.25) #1/4 second of fudge
     if p.is_alive():
@@ -33,7 +33,7 @@ if __name__ == '__main__':
   if test_time_gbfs:
 
     time_bound = 3
-    q = multiprocessing.Process(target=anytime_gbfs, name="Anytime GBFS", args=(PROBLEMS[19],heur_manhattan_distance,time_bound))
+    q = multiprocessing.Process(target=anytime_gbfs, name="Anytime GBFS", args=(PROBLEMS[19],heur_alternate,time_bound))
     q.start()
     q.join(3.25) #1/4 second of fudge
     if q.is_alive():
@@ -88,7 +88,7 @@ if __name__ == '__main__':
 
       s0 = PROBLEMS[i] #Final problems are hardest
       se = SearchEngine('best_first', 'full')
-      se.init_search(s0, goal_fn=snowman_goal_state, heur_fn=heur_manhattan_distance)
+      se.init_search(s0, goal_fn=snowman_goal_state, heur_fn=heur_alternate)
       final = se.search(timebound)
 
       if final:
@@ -145,7 +145,7 @@ if __name__ == '__main__':
       print("PROBLEM {}".format(i))
 
       s0 = PROBLEMS[i] #Final problems are hardest
-      final = anytime_gbfs(s0, heur_fn=heur_manhattan_distance, timebound=timebound)
+      final = anytime_gbfs(s0, heur_fn=heur_alternate, timebound=timebound)
 
       if final:
         print(final.gval)
@@ -181,7 +181,7 @@ if __name__ == '__main__':
 
       s0 = PROBLEMS[i] #Final problems are hardest
       weight = 100 #we will start with a large weight so you can experiment with rate at which it decrements
-      final = anytime_weighted_astar(s0, heur_fn=heur_manhattan_distance, weight=weight, timebound=timebound)
+      final = anytime_weighted_astar(s0, heur_fn=heur_alternate, weight=weight, timebound=timebound)
 
       if final:
         print(final.gval)
