@@ -60,7 +60,7 @@ def heur_alternate(state):
     big_weight = 1.2
     small_path = 0.3
     medium_path = 0.7
-    big_path = 1.1
+    big_path = 1.5
 
     for snowball, size in snowballs.items():
         if (snowball[0] == 0 or snowball[0] == right) and snowball[0] != destination[0]:
@@ -149,7 +149,7 @@ def fval_function(sN, weight):
     return sN.gval + weight * sN.hval
 
 
-def anytime_weighted_astar(initial_state, heur_fn, weight=1., timebound=5):
+def anytime_weighted_astar(initial_state, heur_fn, weight=100, timebound=5):
     # IMPLEMENT
     '''Provides an implementation of anytime weighted a-star, as described in the HW1 handout'''
     '''INPUT: a sokoban state that represents the start state and a timebound (number of seconds)'''
@@ -160,16 +160,18 @@ def anytime_weighted_astar(initial_state, heur_fn, weight=1., timebound=5):
     cost_bound = (float("inf"), float("inf"), float("inf"))
     prime_result = False
 
+
     wrapped_fval_function = (lambda sN: fval_function(sN, weight))
     strategy = SearchEngine('custom', 'default')
     strategy.init_search(initial_state, snowman_goal_state, heur_fn, wrapped_fval_function)
 
     while current < time_limit:
         timebound = time_limit - current
+        weight -= 0.1
         result = strategy.search(timebound, cost_bound)
         if result:
             if result.gval < cost_bound[0]:
-                cost_bound = (result.gval, result.gval, result.gval)
+                cost_bound = (result.gval, float("inf"), result.gval)
                 prime_result = result
         current = os.times()[0]
 
@@ -196,7 +198,7 @@ def anytime_gbfs(initial_state, heur_fn, timebound=5):
         result = strategy.search(timebound, prime_cost)
         if result:
             if result.gval < prime_cost[0]:
-                prime_cost = (result.gval, result.gval, result.gval)
+                prime_cost = (result.gval, float("inf"), result.gval)
                 prime_result = result
         current = os.times()[0]
 

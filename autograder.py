@@ -8,10 +8,10 @@ from snowman import snowman_goal_state
 #Select what to test
 test_time_astar = True
 test_time_gbfs = True
-test_manhattan = False
-test_fval_function = False
+test_manhattan = True
+test_fval_function = True
 test_anytime_gbfs = True
-test_alternate = False
+test_alternate = True
 test_anytime_weighted_astar = True
 
 TIMEOUT = 5 #timeout to impose

@@ -1,0 +1,13 @@
+# 1. For my original heuristic, I design to let the snowball avoid the corner and walls(if the destinationis
+# not locate on that wall) by adding infinity cost
+#
+# 2. I also ask the snowball avoid the corner made by obstacle and obstacle/wall by adding infinity cost.
+#
+# 3. The cost for each unit of distance between robots and snowball is (s: 0.3, m: 0.7, b:1.1), which encourage
+# the robots to approch the big ball even move away from both small and meduim ball
+#
+# 4. The cost for each unit of distance between destination and snowball is (s: 1.0, m: 1.1, b:1.2). The robots
+# will push lager ball first.
+#
+# 5. The ball which have arrive to the destination in correct order will reduce the cost to 0 and the robots
+# won't move it again.
